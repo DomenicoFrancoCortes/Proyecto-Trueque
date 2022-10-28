@@ -1,3 +1,4 @@
+
 <!-- <ion-content>
 
   <div class="contenedor">
@@ -33,14 +34,14 @@
   </form>
 </ion-content> -->
 
-<div class="contenedor" style="background-image: url('../../assets/img/5437842.jpg') ; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
+<div class="contenedor" style="background-image: url('../../assets/img/wave-2.png') ; background-position: center center; background-repeat: no-repeat; background-attachment: fixed; background-size: cover;">
 
   <div class="body">
 
-    <img class="logo" src="../../assets/img/forgot.png" alt="logo">
+    <img class="logo" src="../../assets/img/wrong-password.png" alt="logo">
 
-    <h1>Recuperar Contraseña</h1>
-    <form [formGroup]="credentials" (ngSubmit)="recuperarUsuario()">
+    <h1>Recuperar Usuario</h1>
+    <form [formGroup]="credentials" (ngSubmit)=" recuperarUsuario()">
       <div class="form-floating mb-3">
         <input type="email" class="form-control" formControlName="email" placeholder="dirección de email">
         <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">La dirección de email no es válida
@@ -50,10 +51,11 @@
 
       <div class="d-grid gap-2">
 
-        <button class="btn btn-primary" expand="full" type="submit" [disabled]="!credentials.valid">Enviar</button>
+        <button class="btn" expand="full" type="submit" [disabled]="!credentials.valid">Enviar</button>
         <p><a routerLink="/login"> <b>Volver</b></a></p>
       </div>
 
 
     </form>
-  </div>
+  </div> 
+  

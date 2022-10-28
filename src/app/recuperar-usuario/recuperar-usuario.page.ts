@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
@@ -42,25 +40,8 @@ export class RecuperarUsuarioPage implements OnInit {
     });
     await alert.present();
   }
-// este es el metodo q fuciona
-  //  recuperarUsuario() {
- 
-  //    if (this.credentials.valid && this.email.valid) {
-      
-  //      const { email } = this.credentials.value;
-  //     this.authService.recuperarContraseña(email);
-      
-  //     this.showAlert('Enviado! ', 'Por favor revise su casilla de mail');
-  //     this.router.navigateByUrl('/login', { replaceUrl: true });
-      
-  //    }else{
-  //     this.showAlert('error', 'Por favor revise su casilla de mail');
-  //    }
-  //  }
 
-  //metodo pame donde se valida el usuario, falta ver como dejar al usuario en la pagina de recuperar-usuario
-  //si el email es invalido
-   recuperarUsuario() {
+  recuperarUsuario() {
  
     if (this.credentials.valid) {
      
@@ -74,12 +55,10 @@ export class RecuperarUsuarioPage implements OnInit {
      //console.log("Enviando correo de recuperacion");
 
      // Devuelva al usuario a la página de login
-     this.router.navigateByUrl('/login', { replaceUrl: true });
+    
      
     }
-
-
-
-
   }
+
+
 }
