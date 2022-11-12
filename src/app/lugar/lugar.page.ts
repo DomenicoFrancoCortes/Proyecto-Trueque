@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 // para poder tener los datos de la api
 import { Proveedor1Service } from '../services/proveedor1.service';
+//import { ComentariosComponent } from '../componentes/comentarios-component';
+
 
 //Interface del lugar
 
@@ -41,7 +44,8 @@ export class LugarPage implements OnInit {
   contenidos: Contenido[];
 
   constructor(
-    public proveedor: Proveedor1Service
+    public proveedor: Proveedor1Service,
+    public modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -56,5 +60,13 @@ export class LugarPage implements OnInit {
       (error)=> {console.log(error);}
     );
   }  
+  // async openModal() {
+  //   console.log('this.producto', this.contenidos)
+  //   const modal = await this.modalController.create({
+  //     component: ComentariosComponent,
+  //     componentProps: {contenidos: this.contenidos}
+  //   });
+  //   return await modal.present();
+  // }
 
 }

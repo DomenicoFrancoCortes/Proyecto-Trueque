@@ -1,7 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { Cliente } from '../models';
 import { AuthService } from '../services/auth.service';
+import { AvatarService } from '../services/avatar.service';
+import { FirestorageService } from '../services/firestorage.service';
 import { Proveedor1Service } from '../services/proveedor1.service';
+
+
 
 @Component({
   selector: 'app-home',
@@ -11,34 +18,90 @@ import { Proveedor1Service } from '../services/proveedor1.service';
 export class HomePage {
   profile = null;
 
+  cliente: Cliente = {
+    uid: '',
+    email: '',
+    celular: '',
+    password: '',
+    foto: '',
+   
+    nombre: '',
+    
+  };
+
+  uid = '';
+
   constructor(
    
     private authService: AuthService,
     private router: Router,
-    public proveedor: Proveedor1Service
-  ) {}
+    public proveedor: Proveedor1Service,
+    private avatarService: AvatarService,
+    private loadingController: LoadingController,
+    private alertController: AlertController,
+    public firestorageService: FirestorageService,
+  ) {
+    this.avatarService.getUserProfile().subscribe((data) => {
+      this.profile = data;
+    })
+  }
 
   async logout() {
     await this.authService.logout();
     this.router.navigateByUrl('/', { replaceUrl: true })
   }
 
-  async changeImage() {}
+  async changeImage(){
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Photos, // camara, fotos o prompt
+      
+    });
+    console.log(image);
 
-  option = {
-    initialSlide: 1,
-    speed: 400,
-    autoplay:true,
+    if (image) {
+      const loading = await this.loadingController.create();
+      await loading.present();
+
+      const result = await this.avatarService.uploadImage(image);
+      loading.dismiss();
+
+      if (!result) {
+        const alert = await this.alertController.create({
+          header: "Falló la carga de imagen",
+          message: "Ocurrió un problema al cargar tu avatar",
+          buttons: ['OK'],
+        });
+        await alert.present();
+      }
+    }
+
   }
 
-  async navegarAClubesJazz() {
-    console.log('redirigiendo a clubes de jazz')
-    this.router.navigateByUrl('clubes-jazz', { replaceUrl: true });
+  // cargarImagenDelRegistro() {
+  //   const user = this.firestorageService.getUserProfile()
+    
+  // }
+
+  initCliente() {
+    this.uid = '';
+    this.cliente = {
+      uid: '',
+      email: '',
+      celular: '',
+      password: '',
+      foto: '',
+      nombre: '',
+      
+    };
+    console.log(this.cliente);
+}
+
+  mostrarImagen(){
+    this.cliente.foto;
   }
 
-  async navegarAListado(opcion: string){
-    console.log("Dio click en " + opcion);
-    this.proveedor.opcion = opcion;
-    this.router.navigateByUrl('lista-lugar', { replaceUrl: true });
-  }  
+
 }
